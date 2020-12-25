@@ -1,0 +1,60 @@
+Sometime all fonts aren't available on a certain OS so we need to provide web links to that font
+h1{
+	font-family:cursive or "Arial" or monospace
+	font-style:italic;
+	font-weight:bold;
+	font-size:20px;					//Or we can use EM values instead of pixels, EM values is a dynamic way of
+								naming things. EM is equal to the size of the font applying to the 
+								parent of the element in question. Browser default(is you haven't 
+								specified font size anywhere) is 16px. So by default 1em=16px
+								So, now if we write 2em , we get 32 px
+							But usually we select a font size for the body element. So the other elements
+							for which you've specified font size will be in terms of em, where 1em=
+							font size defined in the body element
+}
+
+There are other properties like text-align, text-shadow, text-decoration etc.
+
+Fonts for each OS can be found in these wikipedia pages-> 
+	https://en.wikipedia.org/wiki/List_of_typefaces_included_with_Microsoft_Windows
+	https://en.wikipedia.org/wiki/List_of_typefaces_included_with_macOS
+
+For font availibility on both platforms, see https://www.cssfontstack.com/
+
+Two websites to download fonts from is fonts.google.com and fontlibrary.org
+
+On fonts.google.com, click on the style you want, click on 'select this style'. 2 codes will pop up, one for <link> and one for
+@import statement. It also specifies CSS rules to specify the families. You've to add the rules in the CSS file of your project.
+
+On fontlibrary.org, we can click on the font we want, on the left we get the <link> and @import statements along with the code to put
+in the CSS file.
+
+We've to save the <link> in the <head> area of the HTML file. 
+We've to save the CSS font-family rules into the div or span or a you want to add the font to.
+
+
+NOTES:-
+1)	If there are multiple fonts in the font-family property, thats so that there is always a "fallback" system (ie, if a browser 
+	doesn't
+	support a type of font, it tries the next font). 
+	<span style="font-family: arial,helvetica,sans-serif">
+	</span>
+
+2)	If we use a font only available on my computer(not through the internet), when we open the website in another computer, the 
+	default font for that computer will be used.
+
+3)	For inherit keyword, see https://developer.mozilla.org/en-US/docs/Web/CSS/inherit
+
+4)	Difference between <link> and @import is that <link> is the HTML mechanism to include a stylesheet while @import is the CSS
+	mechanism to use a stylesheet.
+	<link> is better and prefered by developers.
+	The <link> directive can allow for multiple css be loaded and interpreted asyncronously.
+	The @import directive forces the browser* to wait until the imported script is loaded inline to the parent script before it 
+	can be correctly processed by it's engine, since technically it is just one script.
+	
+	One main advantage of using <link> is that it provides alternate stylesheets for the website(rel="alternate stylesheet"). 
+	See https://www.lifewire.com/difference-between-important-and-link-3466404
+	See https://stackoverflow.com/questions/1022695/difference-between-import-and-link-in-css
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+

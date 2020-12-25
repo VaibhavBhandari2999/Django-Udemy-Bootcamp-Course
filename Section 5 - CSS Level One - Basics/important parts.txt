@@ -1,0 +1,61 @@
+3 parts of the border property for DIVs, border-color, border-width(like thin, thick, 2px), bordor-style(like dotted)
+
+IDs must be unique, classes not compulsory
+
+So HTML tags can have class="XYZ" or/and id="ABC" 
+
+When you want to give styling to all divs or paragraphs in a page
+div{
+}
+p{
+}
+
+When you want to give styling to a class, you do it by telling CSS its a class by adding a dot before it
+.XYZ{
+}
+
+When you want to give styling to an id, you do it by telling CSS its an id by adding a # before it
+#ABC{
+}
+
+* is used to select every element on the page
+
+See CSS Selectors in W3Schools
+
+Eg->
+h3+ul{
+}		which is basically for all unordered lists which occur immediately after a h3
+
+li a{
+}		which is basically for all anchor tags inside a list
+
+li a[href="www.npr.org"]{
+}		which is basically for all anchor tags with that href inside a list
+
+
+Specificity defines the heirarchy of CSS styling, and what types of tags overrule others
+Eg->	<li class="topitems">First</li>
+	<li id="two" class="topitems">Second</li>
+	<li>Third</li>
+	<li>Fourth</li>
+
+Initially, if we do:
+li{	color:red;
+}
+All the list items becomes red.
+
+Then, if we add another styling(class) to the li:
+.topitems{	color:blue;
+}
+The first 2 list items have become blue, 3rd and 4th are still red.
+
+Then, if we add another styling(id) to the li:
+#two{	border:3px solid black;
+}
+The 2nd list item now has a border and is blue, 1st one is just blue, 3rd and 4th are red.
+
+-------We wont use this often, because we will use BootStrap instead.
+2 important links are https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity
+ and https://designshack.net/articles/css/what-the-heck-is-css-specificity/
+
+If we want to change color of link once we've clicked on it, we can use a:visited{color:"blue";}
