@@ -1,0 +1,6 @@
+See the label parameter for forms
+
+Also taught is radio buttons(with same name attribute), drop-down menus
+If we want to link radio buttons together(if 1 is selected, the other cant be selected), make sure the name attribute for both is the same
+
+Rest everything is pretty basic
