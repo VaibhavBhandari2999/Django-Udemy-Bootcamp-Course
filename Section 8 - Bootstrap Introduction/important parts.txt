@@ -1,0 +1,42 @@
+Bootstrap is a common framework used for front end development. Its going to save a lot of time from dealing with CSS manually.
+What is a framework? What makes it different from a library or a package?
+Ans->	Framework has Inversion of Control		Which means the framework is defining the rules for you to follow
+		      Default Behaviour
+		      Extensibility
+		      Non-modifiable framework code
+
+A large part of bootstrap is understanding how to reference the documentation for your own cases.
+
+Bootstrap v4 is a major rewrite from Bootstrap v3, but we won't delve deep enough to notice many of the differences.
+The major differences are:
+	Panels are being replaced by cards
+	Larger default font sizes
+	New grid tier(XL)
+	Use of flexbox
+	Moves from LESS(Leaner CSS) to SASS(Syntactically Awesome Style Sheets)
+
+The Documentation for bootstrap is really good and is found at getbootstrap.com
+There are 2 ways to use Bootstrap:
+	1) Download the source code (Font files, JS files, source LESS)
+	2) Use the CDN(Contect Delivery Network) where we use the <link> tag to use the files over the internet.
+
+
+There are multiple templates and examples also found on the site like Jumbotrons, Navbars, Links
+
+So its basically a bunch of predefined CSS files which we can use which have their own classes predefined
+------------------------------------------------------------------------------------------------------------------------------------
+A key feature of bootstrap is its default classes.
+
+To use bootstrap, add the CDN <link> under the <head> area of the HTML file.
+Note- Bootstrap has a different default font to HTML
+
+See the bootstrap button classes at https://getbootstrap.com/docs/4.0/components/buttons/
+
+For buttons, put the classes as class="btn btn-success btn-lg"
+You can put buttons as disabled also
+
+
+For jumbotron, see https://getbootstrap.com/docs/4.0/components/jumbotron/
+Jumbotron is a lightweight, flexible component that can optionally extend the entire viewport to showcase key marketing messages 
+on your site.
+Normally the jumbotron is inside a container class.

@@ -58,3 +58,16 @@ NOTES:-
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
+Box model precisely dictates how we want our HTML elements to look inside our page.
+The layour is like Margin -> Border -> Padding -> Content. Where -> is 'surrounding'.
+Each of them except the content have top, right, bottom and left. So eg, top border, left padding, bottom margin etc.
+We specify the pixels in the order of Top-Right-Bottom-Left. Eg, for top to have 2px width, 3 for bottom and left, and 1 for right,
+we say margin:2px 1px 3px 3px;
+We can also do this by saying margin-left:3px;
+			      margin-bottom:3px;
+If we put margin:auto; the margin is centered to the page, however big or small it is.
+
+
+
+
+To round corners of a button, use the border-radius style 
