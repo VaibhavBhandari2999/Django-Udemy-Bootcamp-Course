@@ -40,3 +40,36 @@ For jumbotron, see https://getbootstrap.com/docs/4.0/components/jumbotron/
 Jumbotron is a lightweight, flexible component that can optionally extend the entire viewport to showcase key marketing messages 
 on your site.
 Normally the jumbotron is inside a container class.
+
+------------------------------------------------------------------------------------------------------------------------------------
+Bootstrap comes with many default classes for forms.
+See it at https://getbootstrap.com/docs/4.0/components/forms/ OR https://getbootstrap.com/docs/3.4/css/#forms
+Something we'll do very often in bootstrap is to get everything in a container class.
+
+One example is the class form-group which we put in the style parameter of all divs inside a form. This makes the form centered and 
+look nicerwith spacing
+<form>
+	<div style="form-group">
+		<input type="".....>
+	</div>
+</form>
+
+There's another class called form-control class which rounds the corners, stretches the input accordingly, stuff like that, there's a
+halo around the input box when the mouse is on it, when drop-downs are being used, bootstrap makes them look better
+The form control class is used in the <input> tags in a form
+
+We can also use form-text text-muted to write stuff like "We'll never use your info for any wrong purposes" under an input box.
+
+Note-> See multiple class in the select tag of the form
+
+There also classes called from-control-file, 
+form-check-disabled(used when you want to show a radio button as greyed out or disabled), 
+form-check-label(used for labels of radio buttons), 
+form-check(used for radio buttons),
+form-check-input
+
+<legend> tag adds an underline under a heading or some 
+
+You can find all these form examples on https://getbootstrap.com/docs/4.0/components/forms/
+
+-------------------------------------------------------------------------------------------------------------------------------------
