@@ -73,3 +73,60 @@ form-check-input
 You can find all these form examples on https://getbootstrap.com/docs/4.0/components/forms/
 
 -------------------------------------------------------------------------------------------------------------------------------------
+
+Navars are navigational bars that we see on the top of the website.
+See navbar at info https://getbootstrap.com/docs/4.0/components/navbar/
+It requires JS plugins for some things like dropdowns
+
+One class used navbar navbar-default.
+There's a class like navbar-header. This is the header of the navbar where most companies have their brand. To put the brand logo in 
+stylized way, put navbar-brand in the anchor tag.
+
+For unordered lists we use the class "nav navbar-nav". These act as the menus on the navbar from the left.
+For menus on the right, we use the class "nav navbar-nav navbar-right" for the unordered list tags
+
+Note-> To fix the navbar on top of the page, when we scroll down the page, we use the class "navbar-fixed-top" with the original 
+"navbar navbar-default" class.
+To make the navbar dark, add the navbar-invert class
+
+When we reduce the size of the page, we should get the hamburger (3 horizontal lines) icon, which opens to the navbar.We add a 
+button with the class "navbar-toggle collapsed". Inside the button open and class tags, we have a span with the class "sr-only" and 
+3 span tags with "icon-bar" class for showing 3 menus in the hamburger icon.
+
+See the video again for proper explanation.
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+The grid system for bootstrap is one of its most fundamental tools. The grid system provides the core mechanism by which using 
+Bootstrap allows websites to look good across multiple devices of multiple screen sizes.
+
+We basically split the entire screen into 12 available columns. We can use any combination of numbers which will add up to these 12 
+columns. Like 2 6-width columns, or 4 3-width columns, or 3 4-width columns, or 6 2-width columns.
+
+This grid system call will make use of the class "row", inside of a row class the following format is used col-ScreenSize-NumberOfColumns
+Eg-> col-md-6. This means that we want this particular div or container to take up 6 columns (or half the screen). 
+
+So if we have 3 divs with class="col-lg-4". In a large or extra large screen, this will show 3 different divs one next to each other.
+But when we go to a medium or small screen size, the divs will be one below the other.
+
+If below these 3 divs we have 2 divs with class="col-md-6". In a large or extra large screen, these will be displayed properly.
+In a medium screen, the divs with class="col-lg-4" will be shown one below each other, but the divs with class="col-md-6" will
+be shown properly one next to each other. But when the screen size becomes small, even the divs with class="col-md-6" will be shown
+one below the other.
+
+If we add 2 more divs with class="col-xs-6", the will be shown properly no matter the screen size, they will always be shown one next
+to the other. Because there's no screen size smaller than xs.
+
+If we have 4 divs with class="col-lg-3 col-sm-6" with the div names as One, Two, Three and Four.
+For large screen sizes, the divs will be displayed one next to the other, each div taking up 4 columns.
+For small screen sizes, One and Two are displayed next to each other, Three and Four are displayed in the next rown, next to each
+other, with each taking 6 columns.
+Then for extra-small screen sizes, each of them are displayed one below the other, each taking up 6 columns.
+
+See https://getbootstrap.com/docs/3.4/examples/grid/
+
+We can use nesting also. See https://getbootstrap.com/docs/3.4/examples/grid/ and the part about nesting.
+Two columns with two nested columns
+Per the documentation, nesting is easy—just put a row of columns within an existing column. This gives you two columns starting at 
+desktops and scaling to large desktops, with another two (equal widths) within the larger column.
+At mobile device sizes, tablets and down, these columns and their nested columns will stack.
