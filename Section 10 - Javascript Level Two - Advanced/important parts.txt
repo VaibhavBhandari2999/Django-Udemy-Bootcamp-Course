@@ -1,0 +1,181 @@
+------------------------------------------------------------FUNCTIONS--------------------------------------------------------------------------------
+
+The syntax for JS functions is:
+function function_name (parameter1, parameter2)
+{
+}
+Eg-> function hello()
+	{
+		console.log("HelloWorld");
+	}
+
+If we execute hello() we get HelloWorld in the console.
+If we execute hello, the full function code is printed. (full meaning from the first function declaratiion line to the last bracket)
+
+For functions to have default value, to be used when no parameter is passed.
+Eg-> function Name(first="jose")
+	{
+		console.log("Name is "+first);
+	}
+If Name("Dhruv") is called, Name is Dhruv is printed.
+if Name() is called. Name is jose is printed.
+
+If we want a function to return some value, we just use the return statement.
+We don't have to change the return type fo the function or anything, JS doesnt have return types for the function.
+
+Regarding Scope of variables, if a variable is defined outside a function and called inside a function, the function will first 
+search if there's some variable of that name inside the function. If there is, it uses that. If not, it uses the one outside the 
+function.
+
+----------------------------------------------------------ARRAYS---------------------------------------------------------------------------
+
+Arrays are defined as 
+var arr=["India","USA","Canada"]
+To access the array elements we use arr[1] or arr[2]
+
+Note-> Arrays are mutable. We can change the values by doing arr[2]="Spain"
+	Strings are immutable. We can't change letters in the string.
+
+A JS array can have mixed data types also, its not necessary for it to have the same data type for all the elements. 
+
+See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+To add and remove elements from the array, we use Push() and Pop(). Push adds in the end of the array. Pop removes from the end of
+the array.
+
+Eg->	var arr=["one","two","three"];
+	var lastitem=arr.pop();
+	console.log(lastitem);		Will show "three"
+	console.log(arr);		Will show ["one","two"]
+
+	arr.push("Four");
+	console.log(arr);		Will show ["one","two","four"]
+
+We can also nest arrays, which becomes a matrix basically
+
+To find location of element in array by using indexOf() method
+Eg->	var pos=arr.indexOf("three");
+
+Add item to beginning of array:		arr.unshift("Five")
+
+Remove item from beginning of array:	var item=arr.shift();
+
+
+To remove item from an index position:
+
+var removedItem = arr.splice(pos, 1) 		Where pos is the position, 1 is the number of items to be removed.
+
+var removedItem = arr.splice(pos, 4) 		Where pos is the position and 4 items from the position have to be removed.
+
+
+To iterate in the array, we can use:
+	Normal FOR Loop (for(var i=0;i<arr.length;i++))
+	OR
+	New for loop (for letter of arr)
+		Eg:
+			var arr=["A","B","C"]
+			for(letter of arr)
+			{
+				console.log(letter);
+			}
+
+To pass each item of an array to a function, we can either use a for loop to do every item.function() 
+OR
+we can use the forEach() function
+Eg-> var arr=["one","two","three"]
+	arr.forEach(alert);
+	
+	This is similar to doing:
+	for(var i=0;i<arr.length;i++)
+	{
+		alert(arr[i]);
+	}
+
+Note-> To split a string into an array we use the split function with a delimiter
+	var string12="Vaibhav Bhandari"
+	var arr=string12.split(" ");
+	console.log(arr[1])		will print 'Bhandari'
+----------------------------------------------------------------OBJECTS---------------------------------------------------------------------
+
+
+JS Objects are essentially Hash tables. They store info in a key-value pair.
+Unlike arrays, a JS Object doesnt have any sort of order.
+
+The key in the object won't have quotes around it. They aren't strings. But while calling the key to get thh vaue, you do have to
+pass it as a string. 
+
+SEE https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Objects_and_properties
+
+Eg-> 
+	var carInfo={make:"Toyota",year:1990,model:"Camry"};
+
+	console.log(carInfo["make"])		Will print "Toyota"			Note-> We pass "make" as a string but while
+										defining the object, it wasnt
+									This is because, if we call make without quotes, JS thinks
+									we're calling a pre-existing variable called make which
+									has maybe stored a position.
+		
+Eg-> 	var myNew={a:"hello",b:[1,2,3],c:{inside:['a','b']}};	
+	To get 2, we do myNew['b'][1]
+	To get 'b' from the last object, we do myNew['c']['inside'][1]
+
+To change values for a particular key, we do:	 myNew['a']="Bye";
+
+
+To iterate over an object, we can use for-in
+Eg-> 	for(key12 in carInfo)
+	{
+		console.log(key12);			This prints the Keys.This key12 can be any variable
+		console.log(carInfo[key12]);		This prints the Values for the corresponding key
+	}
+	Also, here we don't know the order the object values will get printed in as there is no set order for an object(unlike an 
+	array)
+
+-------------------------------------------------------------Object Methods----------------------------------------------------------
+
+Object methods are functions that are inside an object.
+Its like a function call inside a key value pair where the function name is the key and the function body is the value.
+More realistically we will want to use key-value pairs from the object itself, in that case we use the 'this' keyword.
+
+See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
+
+The 'this' keyword acts differently depending on the situation. For a JS object, the 'this' keyword is set to the object the method 
+is called on.
+
+Eg-> 		var myObj={prop:37,
+			    reportProp:function(){
+				return this.prop;		'this' is acting as reference to the actual object
+				}
+			  };
+		console.log(myObj.reportProp());		Prints 37
+
+
+Eg->		var simple={
+			prop:"Hello",
+			myMethod:function(){
+				console.log("The myMethod was called")
+			}
+		};
+
+		Now, when we call the method
+			simple.myMethod()			It prints 'The myMethod was called'
+
+Eg-> 		var myObj={
+			name:"Jose",
+			greet:function(){
+				console.log("Hello"+this.name);		Refers to the current object we're in and the name property
+			}						of that object. If we didnt use this keyword, it wouldn't
+		};							work and would just print 'Hello'
+
+		Now, when we call the method
+			myObj.greet()				It prints "HelloJose"
+
+Note-> If we call the object method without parenthesis like myObj.greet instead of the correct myObj.greet(), the full body of the
+	function will be returned from the function keyword to the bracket.
+	
+	If we call myObj.greet		It returns function(){
+							console.log("Hello"+this.name)}
+
+Note-> If we wanted to get length of name in the myObj Object in the function, we would use 
+		greet:function(){console.log(this.name.length)}
+

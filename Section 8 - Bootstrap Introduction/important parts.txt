@@ -23,8 +23,10 @@ There are 2 ways to use Bootstrap:
 
 There are multiple templates and examples also found on the site like Jumbotrons, Navbars, Links
 
-So its basically a bunch of predefined CSS files which we can use which have their own classes predefined
-------------------------------------------------------------------------------------------------------------------------------------
+So its basically a bunch of predefined CSS files which we can use which have their own classes predefined.
+
+---------------------------------------------------------------BOOTSTRAP JUMBOTRONS---------------------------------------------------------------------
+
 A key feature of bootstrap is its default classes.
 
 To use bootstrap, add the CDN <link> under the <head> area of the HTML file.
@@ -41,7 +43,8 @@ Jumbotron is a lightweight, flexible component that can optionally extend the en
 on your site.
 Normally the jumbotron is inside a container class.
 
-------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------BOOTSTRAP FORMS-------------------------------------------------------------------------
+
 Bootstrap comes with many default classes for forms.
 See it at https://getbootstrap.com/docs/4.0/components/forms/ OR https://getbootstrap.com/docs/3.4/css/#forms
 Something we'll do very often in bootstrap is to get everything in a container class.
@@ -72,7 +75,7 @@ form-check-input
 
 You can find all these form examples on https://getbootstrap.com/docs/4.0/components/forms/
 
--------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------BOOTSTRAP NAVBARS----------------------------------------------------------------------------
 
 Navars are navigational bars that we see on the top of the website.
 See navbar at info https://getbootstrap.com/docs/4.0/components/navbar/
@@ -95,7 +98,7 @@ button with the class "navbar-toggle collapsed". Inside the button open and clas
 
 See the video again for proper explanation.
 
-------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------BOOTSTRAP GRIDS------------------------------------------------------------------
 
 The grid system for bootstrap is one of its most fundamental tools. The grid system provides the core mechanism by which using 
 Bootstrap allows websites to look good across multiple devices of multiple screen sizes.

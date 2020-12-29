@@ -56,7 +56,7 @@ NOTES:-
 	See https://www.lifewire.com/difference-between-important-and-link-3466404
 	See https://stackoverflow.com/questions/1022695/difference-between-import-and-link-in-css
 
----------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------CSS BOX MODEL----------------------------------------------------------------------------------
 
 Box model precisely dictates how we want our HTML elements to look inside our page.
 The layour is like Margin -> Border -> Padding -> Content. Where -> is 'surrounding'.

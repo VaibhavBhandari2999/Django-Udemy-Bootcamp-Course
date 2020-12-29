@@ -4,6 +4,11 @@ Also, in JS, if you do 2/5, we get 0.4 (not 0 like in C).
 In JS, string + string, concatenates the string
 string.length gives the length of the string.
 
+Also, strings are immutable. We can't change their values.
+Eg-> var name="USA"
+	name[2]="B"
+	console.log(name) will still give "USA" only not "USB".
+
 In JS, newline is \n, tabspace is \t, \ is an escape character. Eg-> suppose we want a string to show the inside quote also in " 4" "
 , we write it as "4\" ".
 
@@ -23,7 +28,7 @@ Prompt returns a string.
 
 To connect JS to the HTML use the <script src="myscript.js"></script> tag in the <head> area of the HTML file.
 
--------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------OPERATORS------------------------------------------------------------------------
 
 Equality in JS is checked by double equal to ==.
 2==2 returns true.
@@ -46,8 +51,10 @@ null===undefined returns false.
 NaN==NaN returns false.
 
 In JS logical operators are shown as && (and), || (or), ! (not).
+There's no XOR operator in JS.
+There is a bitwise operator though.
 
--------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------CONTROL STATEMENTS--------------------------------------------------------------------
 
 If else statement syntax is :
 if()
