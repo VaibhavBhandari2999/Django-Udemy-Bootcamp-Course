@@ -1,0 +1,74 @@
+In JS, there's no distinction between negative, positive, floating point numbers, all of them are treated as numbers only.
+So types in JS are strings, numbers, booleans, undefined, null.
+Also, in JS, if you do 2/5, we get 0.4 (not 0 like in C).
+In JS, string + string, concatenates the string
+string.length gives the length of the string.
+
+In JS, newline is \n, tabspace is \t, \ is an escape character. Eg-> suppose we want a string to show the inside quote also in " 4" "
+, we write it as "4\" ".
+
+Indexing in strings is done with a square bracket. Eg-> "hello"[0] will give "h".
+
+Define Variable as var bank="HDFC";
+OR
+var bank=null; where we will give the value afterwards in the code.
+
+Undefined means something was created but not actually defined.
+Null means we are setting nothing to the variable on purpose. 
+
+Some common functions in JS are alert(), prompt(), console.log(), clear().
+Prompt returns a string.
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+To connect JS to the HTML use the <script src="myscript.js"></script> tag in the <head> area of the HTML file.
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Equality in JS is checked by double equal to ==.
+2==2 returns true.
+"user"=="user" returns true.
+
+Strangely,
+2=="2" also returns true. This is because when == is used, JS does type conversion
+2==="2" will return false.
+5!=="5" will return true.
+5!="5" will return false.
+
+Also, in JS, 0 and 1 are substitutes for false and true respectively.
+true==1 returns true.
+true===1 returns false.
+false==0 returns true.
+false===0 returns false.
+
+null==undefined returns true.
+null===undefined returns false.
+NaN==NaN returns false.
+
+In JS logical operators are shown as && (and), || (or), ! (not).
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+If else statement syntax is :
+if()
+{
+}
+else if()
+{
+}
+else
+{
+}
+
+While loop syntax is :
+while()
+{
+}
+It has break; statement and continue; statement also.
+
+JS has 3 types of FOR loops:
+1) For			- Loops through a number of times
+2) For/In		- Loops through a JS object
+3) For/Of		- used with arrays
+
+ JS also has num=num+1, num+=1, num++ which all mean the same thing.
