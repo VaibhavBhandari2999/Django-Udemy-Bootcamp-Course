@@ -1,0 +1,176 @@
+DOM (Document Object Model) allows us to interface our JS code to interact with HTML and CSS and change what the user is actually seeing.
+
+Browsers will connstruct the DOM, which basically means storing all the HTML tags as JS object.
+
+Suppose we have a page with the title, head and body tags, a heading and anchor tag inside the body tag.
+The DOM will look like:
+	document
+	    |----<html>
+		    |----<head>
+		    |      |----<title>
+		    |	    	   |----"My Title"
+		    |----<body>
+			    |----<h1>
+			    |     |----"A heading"
+			    |
+			    |----<a>
+				  |-----"Link Text"
+
+We can grab tthings from this DOM using JS
+
+Note-> We can see the DOM of any website. we just need to type console.dir(document) in the console of the page.
+	After running that line of code, we get what looks like and is basically a JS object.
+
+So, we can grab large groups of elements like <body> or <head>, or even smaller specific elements like <div>s or classes or ids.
+
+Some important document attributes are :
+document.URL -- Returns the actual URL of the website
+document.body -- Returns everything inside of the body
+document.head -- Returns everything in the head of the page
+documnet.links -- Returns all the links on the page
+
+No parenthesis for any of the above
+
+Then we also have methods we can use to grab HTML elements:
+
+document.getElementById() -- Returns the element with the id specified
+document.getElementsByClassName() -- Returns list of all elements belonging to a class
+document.getElementsByTagName() -- Returns list of all elements with the tag
+document.querySelector() -- Returns the first object matching the CSS style selector
+document.querySelectorAll() -- Returns all objects matchin the CSS style selector
+
+The first three of these are pretty self explanatory. The querySelector() can accept CSS style selector, so you can use # or . if you 
+want ids or classes. Basically a more generalized method where you can type any CSS style. The difference between querySelector() and 
+querySelectorAll() is that querySelectorAll() will return a list of all matches, querySelector() just returns the first match.
+
+Eg-> If there is an HTML div:
+	 <div id="pickme"> <p>This is the paragraph</p></div>
+
+	We then run document.getElementById("pickme")			the complete div 
+									<div id="pickme"> <p>This is the paragraph</p></div> is returned
+
+Eg-> If there are two HTML div:
+	<div class="myul"><p>This is a paragraph</p></div>
+	<div class="myul"><a>This is a link</a></div>
+
+	We then run document.getElementsByClassName("myul")		a list of the 2 elements is returned, each with all the properties
+									under that according to DOM tree
+Eg-> Same thing for getElementsByTagName()
+	if getElementsByTagName("a") is run, a list of all the anchor tags and the elements underneath them is returned
+
+
+If we use document.querySelector() and document.querySelectorAll(), we need to pass in the actual CSS selector tag, like ".myul" or 
+"#pickme" or "a"
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Suppose now we want to change color of header using what we learned. 
+First we need to grab the header, which we do by using
+	var myheader=document.querySelector("h1");
+
+So now myheader variable has the full header tag. So whatever changes we do to myheader will reflect to the header tag also.
+
+Then we need to change color of this, so we do:
+	myheader.style.color="red";				This makes the header color red
+
+-------------------------------------------------------------------Part 2 - Content Interaction-----------------------------------------------------------------------
+
+So once we've got the required element by using querySelector() or getElementById() and saved it in a variable myvariable, 
+we can use multiple other functions on that element.
+
+myvariable.textContent - This returns just the text
+myvariable.innerHTML - This returns the actual html
+myvariable.getAttribute() - This returns the original attribute
+myvariable.setAttribute() - This allowed you to set an attribute
+
+Eg-> Suppose we have HTML:
+		    <p>To Edit Styles, we've already seen we can use the .style tag.
+      			Now if we want to edit <strong>actual html or text</strong> or
+      			<a href="http://www.google.com">attributes</a> we can use different methods.
+       			If you want to change the text,html content, or attributes you can use the following:
+    		    </p>
+
+	We then run:
+		var p=document.querySelector("p")		Now the whole <p> html and everything inside it(inclusing <a> and <strong>
+								is saved in the p variable)
+	We now run:
+		p.textContent="new text"			With this, all the original text will be replaced by "new text" in the 
+								webpage
+	If we run:
+		p.textContent="<strong>I'm Bold</strong>"	The whole phrase <strong>I'm Bold</strong> will be shown on the webpage not
+								just I'm Bold in bold.
+	However, If we run:
+		p.innerHTML="<strong>I'm Bold</strong>"		Then "I'm Bold" in Bold will be displayed on the webpage
+
+
+Eg-> Suppose we have HTML:
+			<h4 id="special">I am another <em>header</em> with the special id.
+      				<a href="https://www.facebook.com">FACEBOOK LINK</a>
+    			</h4>
+	
+	We then run:
+		var special=document.querySelector("#special")	Now the whole <h4> element and everything inside(including the <em> and <a>
+								is saved inside the special variable)
+	We then run:
+		var specialA=special.querySelector("a")		Now the anchor tag is saved in the specialA variable. This is how we go
+								inside each element in the DOM
+	We then run:
+		specialA.getAttribute("href")			This will return the link https://www.facebook.com
+	
+	If we run:
+		specialA.setAttribute("href","https://www.amazon.com")		Now, when we click on the "Facebook Link" on the webpage,
+										we'll get redirected to amazon.com
+
+--------------------------------------------------------------------Events---------------------------------------------------------------------
+
+We don't always want to specify beforehand how to interact with the DOM. Many times, we only want the interaction to occur on a particular
+event, such as a click or a hover.
+
+We do this by adding an EventListener. Here, the JS will be "listening" for an event to occur and will execute a function when it happens.
+
+The syntax is:				myvariable.addEventListener(event,func);		func can be a built-in function or custom 
+												function
+Eg->   					var head=document.querySelector("h1");
+					head.addEventListener("click",changeColor);
+
+There are many possible events like Clicks, Hovers, Double Clicks, Drags etc. See all at 
+https://developer.mozilla.org/en-US/docs/Web/Events
+
+Eg-> 	Suppose we have HTML:
+		<body>
+    			<h1 id='one'>Hover Over Me!</h1>
+			<h1 id='two'>Click Me!</h1>
+			<h1 id='three'>Double Click Me!</h1>
+		</body>
+
+	First, we get all the elements required using:
+		
+		var headOne = document.querySelector('#one')			We use # as we're using id='one', not class='one'
+		var headTwo = document.querySelector('#two')
+		var headThree = document.querySelector('#three')
+
+	Next, to change the <h1> with id='one', we do:
+		
+		headOne.addEventListener('mouseover',function(){		Here, mouseover is the event we're listening for. Once it
+  			headOne.textContent = "Mouse currently Over";		occurs, the function is called which changed the text and
+  			headOne.style.color = 'red';				color of the text
+		})
+		
+		headOne.addEventListener('mouseout',function(){			Here, mouseout is the event we're listening for
+  			headOne.textContent = "Mouse Not On me."
+  			headOne.style.color = 'blue';
+		})
+
+	In the above 2 eventListeners what happens is that the text will change to "Mouse currently over" when the mouse is on that h1 tag.
+	When the mouse moves out of the h1 tag, the text will change to "Mouse Not on me."
+
+	Next, we add another 2 event listeners for the tags id='two' and id='three'
+
+		headTwo.addEventListener("click",function(){			The text and color will change when the h1 is clicked
+  			headTwo.textContent = "Clicked On";
+  			headTwo.style.color = 'blue';
+		})
+
+		headThree.addEventListener("dblclick",function(){		The text and color will change when the h1 is double
+  			headThree.textContent = "Double Clicked!";		clicked. Nothing will happen when the h1 is single clicked
+  			headThree.style.color = 'red';
+		})
