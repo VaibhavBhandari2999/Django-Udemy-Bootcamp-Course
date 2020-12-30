@@ -1,0 +1,38 @@
+So jQuery is a JS library that is a large single .js file that has many pre-built methods and objects that simplify your workflow.
+Specifically interacting with the DOM and making HTTPS requests (AJAX).
+
+When jQuery was created, the more robust and convenient methods such as .querySelector() didn't exist.
+jQuery was created as a way to help simplify interactions with the DOM.
+One of its main features is the use of the $ su=ign.
+
+To get jQuery we have 2 options:
+	Link a CDN hosted file (like we did for bootstrap)
+	Download the .js file form jQuery's official website
+
+Once we've done this and connected jQuery using the <script> tags, we can use the specialized jQuery calls to interact with the DOM.
+
+So, in Jquery instead of using the:
+		var divs=document.querySelectorAll('div');
+	We can use:
+		var divs=$('div');	
+
+This gives the same result and saves a list of all the div elements in the div variable.
+
+When we want to change the styling of the tags, in JS we do:
+	el.style.borderWidth='20px';
+In jQuery, we do:
+	$(el).css('border-width','20px');
+
+So we can see that jQuery lets us change any CSS property very easily
+
+Another example relating to function calls:
+	jQuery:
+		$(document).ready(function(){ //code });
+	JS:
+		function ready(fn) {
+			if (document.readyState != 'loading'){
+				fn();
+			} 
+			else {
+				document.addEventListener('DOMContentLoaded', fn);
+			}
