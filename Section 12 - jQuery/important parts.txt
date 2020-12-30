@@ -36,3 +36,170 @@ Another example relating to function calls:
 			else {
 				document.addEventListener('DOMContentLoaded', fn);
 			}
+----------------------------------------------------------------Basics---------------------------------------------------------------------------
+
+To use jQuery in the project go to http://code.jquery.com/ . There there are many doffernt versions of jQuery, each version has further
+types like uncompresses, minified, slim, slim minified. These range from biggest to smallest files of jQuery respectively. Click on the one
+you want to use, and copy the <script> code to be added in the HTML file.
+
+To confirm jQuery has been loaded, just try to grab some DOM element. To do that, in the console, just do $('div').
+
+To use jQuery to edit CSS properties, we can do:
+	var x=$('h1')
+	x.css('background','blue')
+
+To change multiple CSS properties at once we can do:
+	var x=$('h1')
+	var newCSS={'color':'white','background':'blue','border':'20px solid red'}
+	x.css(newCSS)									All these CSS changes are applied now
+
+
+Suppose we get multiple objects when grabbing an object:
+	var x=$('li')				If the page has multiple 'li's, all these are saved in variable x as a list/array basically
+	x.css('color':'blue')			Now all the listitems(li) in the page become blue as x was a array/list of listitems(li)
+	
+However, suppose we want to only change the CSS of one of the listitems, we do:
+		x.eq(2).css('color':'orange')			Now, the 2nd item in the list of x has become orange
+		x.eq(-1).css('color':'black')			Now, the last item in the list of x has become black
+
+
+To change the Text of a DOM element, similar to document.setAttribute() in JS, in jQuery we do:
+
+		$('h1').text()			Gives the original text in h1
+		$('h1').text("New Text")	Original text gets changed to "New Text"
+
+To change the HTML of a DOM element, similar to document.innerHTML() in JS, in jQuery we do:
+
+		$('h1').html()					Gives the original html in h1
+		$('h1').html("<strong>New Text</strong>")	Original text gets changed to "New Text" which is also in bold
+
+
+We can also change attributes of tags in jQuery. For example, we can change the type of input from a text to a checkbox.
+Eg-> Suppose we have HTML like 
+    		<input type="text" name="" value="Enter Your Name">
+    		<input type="submit" name="" value="Submit">
+
+	Now, when we run $('input'), we get a list of 2 objects, as there are 2 input tags in the HTML file
+
+	$('input').eq(1).attr('type','checkbox')		Now, the submit button becomes a checkbox. eq(1) corresponds to the 2nd
+								input attribute in the list, which is the submit button.
+								In the attr function, 1st arguement is the attribute we want to change, 
+								2nd arguement is what we want to change it to
+
+	Now, when we want to change the value of the textbox, we do:
+		$('input').eq(0).val('new value!')		So 'Enter Your Name' in the textbox gets changed to 'new value!'
+
+
+If we want to add a CSS class to a particular DOM element, we do:
+	Suppose we have 2 CSS classes as:
+		<style>
+      			.turnBlue{
+        			color:white;
+        			background: blue;
+      			}
+      			.turnRed{
+        			color:white;
+        			background: red;
+      			}
+    		</style>
+
+	To add a class to a <h1> tag, we do:
+		$('h1').addClass('turnRed')
+
+	Similarly, to remove a class from a <h1> tag, we do:
+		$('h1').removeClass('turnRed')
+
+	Similarly, we can also toggle class, which acts as a swicth. When the line is run once, the <h1> becomes red. When the line is run
+	again, the class is switched off, and the <h1> becomes black again.
+		$('h1').toggleClass('turnRed')
+
+-------------------------------------------------------------------Events------------------------------------------------------------------------
+
+This is similar to eventlisteners in Javascript. See all jQuery events at https://api.jquery.com/category/events/
+
+Suppose we want to do something when the <h1> tag is clicked. We do:
+	$('h1').click(function(){
+		console.log("There was a click!");
+	})
+
+This will work for multiple elements also. If there are multiple <h1>s in a page, if any of them are clicked, "There was a click!" will be
+printed in the console.
+
+If we want to change the attributes of some element we're calling/using, we use the 'this' keyword. Like, if we want to change the heading
+everytime we click on it.	
+	$('h3').click(function() {	
+  		$(this).text("I was changed!");			So 'this' keyword just points to whichever object we're performing the
+	})							event on. Here the 'this' keyword is 'h3'. So here, when the <h3> tag is 
+								clicked, the original text changes to "I was changed!".
+
+The above is for hover or double-clicks or anything, which are found in https://api.jquery.com/category/events/
+
+We're also not limited to mouse events. We can also listen for keyboard events like Key Presses
+Eg-> 
+	Suppose we have HTML:
+
+		<style>
+      			.turnBlue{
+        			color:white;
+        			background: blue;
+      			}
+      			.turnRed{
+        			color:white;
+        			background: red;
+      			}
+    		</style>
+		<h3>Later on we will use jQuery to interact with them!</h3>
+    		<input type="text" name="" value="Enter Your Name">
+    		<input type="submit" name="" value="Submit">
+
+	
+	So, we want to change <h3> tag color on and off whenever a key is pressed in the input text box. We do:
+		
+		$('input').eq(0).keypress(function() {		Here, everytime a key is pressed in the textbox, the function() is executed
+			$('h3').toggleClass("turnRed");		which basically toggles the turnRed class on and off for the <h3> tag.
+		})
+
+	We can also use Event Objects, which have a tonne of information. 
+		$('input').eq(0).keypress(function(event) {	Here, when the console.log(event) is executed, there is long list of event
+			console.log(event);			properties. There is also a 'which' property. When we open that, we get the
+		})						value x, which is the ASCII value of teh char which was just typed in the
+								input text box. Like if 'a' was just typed, the 'which' property will show
+								97 (ASCII value of small a)
+
+	We can also search for specific characters being typed and change the <h3> style when 'a' is typed in the input text box:
+		$('input').eq(0).keypress(function(event) {
+			if(event.which === 97){				Similarly, we can check it with 13, which is the ASCII for the
+				$('h3').toggleClass("turnRed");		'enter'
+  			}
+		})
+
+
+on() method is liek addEventListener() method in JS.
+	$('h1').on("dblclick",function() {
+  		$('h1').addClass('turnBlue');		Here, on 'doubleclick' event, run the function, which changes the class of the
+	})						<h1> tag
+
+	We can use the 'this' keyword also here.
+	$('li').on('mouseenter',function() {
+		$(this).toggleClass('turnRed');		Here, the 'this' keyword, is referencing the tag being worked on, which is <l1>
+	})
+
+
+Animations and Effects::::
+
+We can see various effects and animations at https://api.jquery.com/category/effects/
+
+Eg-> 	$('input').eq(1).on("click",function(){		Here, we use the 2 input statements again. For the 2nd input(submit button),
+  		$(".container").fadeOut(3000) ;		when the button is clicked, the full container class fades out. Here, container
+	})						class is specified in the Part1_MyDocument.html file which is in the same folder as
+							this text document. The whole div with class="container" fades out in 3000 milli-
+							seconds
+
+	Another animation, apart from fadeOut is slideUp:
+	$('input').eq(1).on("click",function(){
+		$(".container").slideUp(1000) ;
+	})
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+Really See the videos and files for the front end mini project (connect 4). The videos are in the jQuery Section of the course only. 
