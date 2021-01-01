@@ -1,0 +1,104 @@
+-------------------------------------------------------------------Scope------------------------------------------------------------------------
+
+When you define a variable somewhere in your code and later want to call/use that variable, python will want to look inside the namespace,
+which is basically how it knows what variables go where. But it has to follow some rules to see the order in which it has to look.
+
+Python scope follows the LEGB rule:
+	1)Local					Names assigned in any way within a function(def or lambda), and not declared global in that
+						function
+	2)Enclosing Function Locals		Names in the local scope of any and all enclosing functions(def or lambda), from inner to
+						outer (functions within functions)
+	3)Global				Names assigned at the top-level of a module file, or declared global in a def within the 
+						file
+	4)Built-in				Names preassigned in the built-in names module: open, range, SyntaxError
+
+Eg->
+	Code is:
+		x = 25
+		def printer():
+    			x = 50
+    			return x
+		print(x)			25 will be printed
+		print(printer())		50 will be printed
+		my_func()
+		print(x)			25 will be printed, as x=50 only inside the function, not outside. It doesnt get reassigned outside
+						the function also
+
+Eg (Local)->
+	Code is:
+		f = lambda x:x**2		x in this is locally defined
+
+Eg (Enclosing, this is for nested functions)->
+	Code is:
+		
+		name = 'This is a global name'
+
+		def greet():
+    			# Enclosing function
+    			name = 'Sammy'
+
+    			def hello():
+	        		print('Hello '+name)
+
+	    		#hello()
+
+		greet()				Does nothing as only name reassignment takes place, the print statement will not execute
+						because hello() is not called. hello() is called in greet() but is commented.
+
+Eg (Built-in)->
+		len
+		def
+
+    
+Local Variables
+	When you declare variables inside a function definition, they are not related
+	in any way to other variables with the same names used outside the function -
+	i.e. variable names are local to the function. This is called the scope of the
+	variable. All variables have the scope of the block they are declared in
+	starting from the point of definition of the name.
+
+Eg->
+	x = 50
+
+	def func(x):
+    		print('x is', x)			Prints 50, as it hasnt found anything in local scope, so it checks next in global
+							scope
+    		x = 2
+    		print('Changed local x to', x)		Prints 2, as it checks first in local scope, finds x=2, and prints that. It now
+							doesn't need to check in global scope as it has already found a 'x' in local scope.
+	func(x)
+	print('x is still', x)				It looks in global namespace
+
+
+GLOBAL statement->
+
+	If you want to assign a value to a name defined at the top level of the program
+	(i.e. not inside any kind of scope such as functions or classes), then you have
+	to tell Python that the name is not local, but it is global. We do this using
+	the global statement. It is impossible to assign a value to a variable defined
+	outside a function without the global statement.
+
+	You can use the values of such variables defined outside the function
+	(assuming there is no variable with the same name within the function).
+	However, this is not encouraged and should be avoided since it becomes unclear
+	to the reader of the program as to where that variable’s definition is. Using
+	the global statement makes it amply clear that the variable is defined
+	in an outermost block.
+
+
+Eg->
+	x = 50
+
+	def func():
+    		global x						So, basically global keyword lets the program know that any
+									operation in this function will be done on the global scope x
+    		print('This function is now using the global x!')
+    		print('Because of global x is: ', x)			Prints 50
+    		x = 2
+    		print('Ran func(), changed global x to', x)
+
+	print('Before calling func(), x is: ', x)			Prints 50
+	func()
+	print('Value of x (outside of func()) is: ', x)			Prints 2 as value of global x is now reassigned to 2
+
+----------------------------------------------------------Object Oriented Programming---------------------------------------------------------------------------------
