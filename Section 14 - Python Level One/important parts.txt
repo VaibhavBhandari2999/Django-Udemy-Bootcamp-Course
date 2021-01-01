@@ -1,0 +1,2 @@
+No specifically important parts, all of it is pretty basic python.
+Just revise lamnda functions and filter() function
