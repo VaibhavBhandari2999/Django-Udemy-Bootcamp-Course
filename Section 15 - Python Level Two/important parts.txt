@@ -102,3 +102,211 @@ Eg->
 	print('Value of x (outside of func()) is: ', x)			Prints 2 as value of global x is now reassigned to 2
 
 ----------------------------------------------------------Object Oriented Programming---------------------------------------------------------------------------------
+
+Everything is an object in python. You find anything's object by using the function type().
+
+Eg-> 	print(type([1,2,3]))		Will print <class 'list'>
+	print(type((1,2)))		Will print <class 'tuple'>
+	print(type(1))			Will print <class 'int'>
+	print(type(1.02))		Will print <class 'float'>
+
+User defined objects are created using the 'class' keyword. A class is essentially a blueprint which defines the nature of the object. We 
+can create instances of a class. An 'instance' is just a specific object created from a particular class. mylist=[1,2,3] is an instance of 
+the list class.
+
+Eg-> 	class Sample():
+		pass
+
+	x=Sample()
+	print(type(x))		Will print <class '__main__.Sample'>
+	
+	By convention we give classes a name that starts with a capital letter.
+	Note how x is now the reference to our new instance of a Sample class.
+	In other words, we **instantiate** the Sample class.
+
+A class can have methods and attributes also.
+An attribute is a characteristic of an object.
+A method is an operation we can perform with the object.
+
+Syntax for creating an attribute is:
+	self.attribute_name = something
+
+Syntax for creating a method is like a normal function only. However, there is a special mthod in a class called the __init__(self) method
+(with the underscores also). The init method stands for initialization. What the self keyword does is tell that this method(init method)
+refers to itself (the actual class object).
+The __init__ method can have more arguements than the self attribute also.
+So now whenver, we create an instance of the class, we need to put that additional arguement also when calling the class.
+
+Eg->	For example we can create a class called Dog. An attribute of a dog may be its breed or its name, while a method of a dog may be 
+	defined by a .bark() method which returns a sound.
+
+	class Dog():
+	    def __init__(self,breed):
+        	self.breed = breed
+
+	sam = Dog(breed='Lab')				Or call it like: sam=Dog('Lab')
+	frank = Dog(breed='Huskie')			Or call it like: frank=Dog('Huskie')
+
+	
+	Lets break down what we have above.The special method
+	__init__() is called automatically right after the object has been created:
+			def __init__(self, breed):
+
+	Each attribute in a class definition begins with a reference to the instance object. It is by convention named self. The breed is 
+	the argument. The value is passed during the class instantiation.
+			self.breed = breed
+
+	Now we have created two instances of the Dog class. With two breed types, we can then access these attributes like this:
+
+			sam.breed
+			frank.breed
+
+	Note how we don't have any parenthesis after breed, this is because it is an attribute and doesn't take any arguments.
+
+--------------------------------------------------
+CLASS OBJECT ATTRIBUTES:
+
+In Python there are also *class object attributes*. These Class Object Attributes are the same for any instance of the class. 
+For example, we could create the attribute *species* for the Dog class. Dogs regardless of their breed,name, or other attributes will 
+always be mammals.
+We apply this logic in the following manner:
+
+	class Dog():
+
+	    # Class Object Attribute
+	    species = 'mammal'
+
+	    def __init__(self,breed,name):
+	        self.breed = breed
+	        self.name = name
+
+	sam = Dog('Lab','Sam')
+	sam.name
+
+Note-> The Class Object Attribute is defined outside of any methods in the class. Also by convention, we place them first before the init.
+
+-------------------------------------------------
+METHODS:
+
+Methods are functions defined inside the body of a class. They are used to perform operations with the attributes of our objects. Methods 
+are essential in encapsulation concept of the OOP paradigm. This is essential in dividing responsibilities in programming, especially in 
+large applications.
+You can basically think of methods as functions acting on an Object that take the Object itself into account through its *self* argument.
+
+Eg-> 
+	class Circle():
+    	pi = 3.14
+
+	    # Circle get instantiated with a radius (default is 1)
+	    def __init__(self, radius=1):
+	        self.radius = radius
+	
+	    # Area method calculates the area. Note the use of self.
+	    def area(self):							Tells that this is not a free floating method inside that 
+	        								class, its a method OF the class
+		return self.radius * self.radius * Circle.pi			We use the self keyword to say that the variable 'radius'
+										is the circle's own radius
+	    # Method for resetting Radius
+	    def setRadius(self, radius):
+	        self.radius = radius
+
+	    # Method for getting radius (Same as just calling .radius)
+	    def getRadius(self):
+	        return self.radius
+
+
+	c = Circle()
+	
+	c.setRadius(2)
+	print('Radius is: ',c.getRadius())
+	print('Area is: ',c.area())						If we just call c.area not c.area(), a bound method is 
+										printed, which basically say that 'area' is a bound method
+										of the Circle class at a particular location
+
+------------------------------------------------------------
+INHERITANCE:
+
+Inheritance is a way to form new classes using classes that have already been defined. The newly formed classes are called derived classes,
+the classes that we derive from are called base classes. Important benefits of inheritance are code reuse and reduction of complexity of 
+a program. The derived classes (descendants) override or extend the functionality of base classes (ancestors).
+
+Eg->
+	class Animal():
+    	def __init__(self):
+	        print("Animal created")
+
+	    def whoAmI(self):
+	        print("Animal")
+
+	    def eat(self):
+	        print("Eating")
+
+
+	class Dog(Animal):				As all dogs are animals and we want to inherit from the base class, we pass Animal
+	    def __init__(self):				
+	        Animal.__init__(self)			Its like a constructor for the base class. So even if this line was commented, the
+	        print("Dog created")			base class constructor would have been called.
+
+	    def whoAmI(self):				Overwrite's the base class method, so this Class method is called instead
+	        print("Dog")
+
+	    def bark(self):
+	        print("Woof!")
+
+	d = Dog()
+	d.whoAmI()
+	d.eat()
+	d.bark()
+
+	In this example, we have two classes: Animal and Dog. The Animal is the base class, the Dog is the derived class.
+	The derived class inherits the functionality of the base class.
+		 * It is shown by the eat() method.
+	
+	The derived class modifies existing behavior of the base class.
+		* shown by the whoAmI() method.
+
+	Finally, the derived class extends the functionality of the base class, by defining a new bark() method.
+
+-----------------------------------------------------
+SPECIAL METHODS:
+
+Finally lets go over special methods. Classes in Python can implement certain operations with special method names. These methods are not 
+actually called directly but by Python specific language syntax. All special methods are represented with the double underscores __.
+
+Eg->
+	class Book():
+	    def __init__(self, title, author, pages):
+	        print("A book is created")
+	        self.title = title
+	        self.author = author
+	        self.pages = pages
+
+	    def __str__(self):
+	        return "Title:%s , author:%s, pages:%s " %(self.title, self.author, self.pages)
+
+	    def __len__(self):
+	        return self.pages								Note, we call self.pages not just pages
+
+	    def __del__(self):
+	        print("A book is destroyed")
+
+	book = Book("Python Rocks!", "Jose Portilla", 159)
+
+	#Special Methods
+	print(book)						If the __print__ method is not present, this prints 
+								"<__main__.Book object at 0x00000208DBA87710>". When we call
+								the print function for an object, it looks for its string representation
+								which we haven't defined. We define it in the __print__ method
+	
+	print(len(book))					If the __len__ methid is not present, this line prints a TypeError, which
+								says 'object of type 'Book' has no len()'. Thats why we define a special
+								method __len__
+	
+	del book
+
+	The __init__(), __str__(), __len__() and the __del__() methods.
+	These special methods are defined by their use of underscores. They allow us to use Python specific functions on objects created 
+	through our class.
+
+-------------------------------------------------------------Errors and Exceptions------------------------------------------------------------------------------
+
