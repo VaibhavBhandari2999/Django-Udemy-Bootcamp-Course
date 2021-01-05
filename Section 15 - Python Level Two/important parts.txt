@@ -310,3 +310,216 @@ Eg->
 
 -------------------------------------------------------------Errors and Exceptions------------------------------------------------------------------------------
 
+Sometimes, code isn't perfect, and we run into errors. But how do we actually set up our own errors and exception calls.
+Eg-> print('Hello
+
+Note how we get a SyntaxError, with the further description that it was an EOL (End of Line Error) while scanning the string literal. This
+is specific enough for us to see that we forgot a single quote at the end of the line. Understanding these various error types will help 
+you debug your code much faster.
+
+This type of error and *description* is known as an Exception. Even if a statement or expression is syntactically correct, it may cause an 
+error when an attempt is made to execute it. Errors detected during execution are called exceptions and are not unconditionally fatal. So 
+we try to predict what error can occur and roll with the punches and define an alternate path for the program to follow if that specific 
+error does occur.
+
+------------------------------------------
+TRY AND EXCEPT:
+
+The basic terminology and syntax used to handle errors in Python is the try and except statements. The code which can cause an exception to
+occur is put in the try block and the handling of the exception is the implemented in the except block of code. 
+The syntax form is:
+
+	try:
+		You do your operations here...
+        	...
+	except ExceptionI:
+        	If there is ExceptionI, then execute this block.
+     	except ExceptionII:
+        	If there is ExceptionII, then execute this block.
+        	...
+     	else:
+        	If there is no exception then execute this block.
+
+We can also just check for any exception with just using except.
+
+Eg-> 
+
+	try:
+	    f = open('testfile','w')				
+	    f.write('Test write this')					This code will run properly as we're writing to a file with 'w' tag and 'Content Written successfully will be printed'
+	except IOError:
+	    # This will only check for an IOError exception and then execute this print statement
+	   print("Error: Could not find file or read data")
+	else:
+	   print("Content written successfully")
+	   f.close()
+
+	try:
+    		f = open('testfile','r')
+	    f.write('Test write this')						
+	except IOError:
+	    # This will only check for an IOError exception and then execute this print statement
+	   print("Error: Could not find file or read data")
+	else:
+	   print("Content written successfully")
+	   f.close()
+
+	In the above 2nd example, when we write to a file which is open in 'r' mode, the IOError will be considered, and 'Error:Could not file or read data' will be printed, and the rest of the program (not else block) will be run
+
+If we aren't sure about the type of error, we use a blank except block.
+
+	try:
+	    f = open('testfile','r')
+	    f.write('Test write this')
+	except:
+	    # This will check for any exception and then execute this print statement
+	   print("Error: Could not find file or read data")
+	else:
+	   print("Content written successfully")
+	   f.close()
+
+----------------------------------------
+FINALLY:
+
+The finally: block of code will always be run regardless if there was an exception in the try code block. 
+The syntax is:
+
+     try:
+        Code block here
+        ...
+        Due to any exception, this code may be skipped!
+     finally:
+        This code block would always be executed.
+
+Eg->
+	try:
+	   f = open("testfile", "w")
+	   f.write("Test write statement")
+	finally:
+	   print("Always execute finally code blocks")
+
+Note-> The try-except-else-finally blocks are not invulnerable. Suppose in the above example, the f.write statement doesn't have a closing
+	parenthesis, a fatal syntax error will be shown, as the interpreter thinks that the finally block is part of the f.write statement.
+
+So this is more commonly used to regulate user inputs and make sure the code doesn't fail if the user enters something incorrectly
+
+---------------------------------------------------------------------Regular Expressions----------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------Decorators--------------------------------------------------------------------
+
+
+--------------------------------------------------------------------Modules and Packages-----------------------------------------------------------------------
+
+We constantly seeing different modules being imported into python and their various methods/functions being used.
+
+To make a module, just create a python file and put any function in it.
+Eg-> 
+	# Great resource: https://docs.python.org/3/tutorial/modules.html
+
+	def func_in_mymodule():							The file name is mymodule.py
+    		print("I am a function inside of the mymodule.py file!")
+	
+So now, how to import this module and use the function in a program. There are multiple ways of doing so:
+
+1)
+	import mymodule					As the mymodule.py is in the same folder as the file you're importing the module,
+							we can call it directly. Otherwise, you have to specify the directory location.
+	mymodule.func_in_mymodule()
+
+2)
+	import mymodule as mm
+	mm.func_in_mymodule()
+
+3)
+	from mymodule import func_in_mymodule		If we don't want to import the whole module, just some functions from it
+	func_in_mymodule()
+
+4)
+	from mymodule import *				This is if you want to import every function from that module. This is not
+							reccommended as it wastes a lot of memory by importing everything. Also, it causes
+							poorly readable code because you don't know what functions come from mymodule
+	func_in_mymodule()
+
+--------------------------------------------------------------------Name and Main-----------------------------------------------------------------------
+
+Sometimes when you are importing from a module, you would like to know whether a modules function is being used as an import, or if you 
+are using the original .py file of that module.
+In this case we can use the:
+
+      if __name__ == "__main__":
+
+line to determine this.
+
+When your script is run by passing it as a command to the Python interpreter:
+
+    python myscript.py
+
+all of the code that is at indentation level 0 gets executed. Functions and classes that are defined are, well, defined, but none of their 
+code gets ran. Unlike other languages, there's no main() function that gets run automatically - the main() function is implicitly all the 
+code at the top level.
+
+In this case, the top-level code is an if block.  __name__ is a built-in variable which evaluate to the name of the current module. However
+, if a module is being run directly (as in myscript.py above), then __name__ instead is set to the string "__main__". Thus, you can test 
+whether your script is being run directly or being imported by something else by testing
+
+    if __name__ == "__main__":
+        ...
+
+If that code is being imported into another module, the various function and class definitions will be imported, but the main() code won't \
+get run. As a basic example, consider the following two scripts:
+
+    	# file one.py
+	    def func():
+	        print("func() in one.py")
+	
+	    print("top-level in one.py")
+	
+	    if __name__ == "__main__":
+	        print("one.py is being run directly")
+	    else:
+	        print("one.py is being imported into another module")
+
+and then:
+
+	    # file two.py
+	    import one
+	
+	    print("top-level in two.py")
+	    one.func()
+	
+	    if __name__ == "__main__":
+	        print("two.py is being run directly")
+	    else:
+	        print("two.py is being imported into another module")
+
+Now, if you run one.py:
+You get:
+    	top-level in one.py					
+	one.py is being run directly
+
+If you run two.py instead:
+You get:
+
+  	top-level in one.py
+  	one.py is being imported into another module
+  	top-level in two.py
+  	func() in one.py
+  	two.py is being run directly
+  
+Thus, when module one gets loaded, its __name__ equals "one" instead of __main__.
+
+__name__ is a built in variable which evaluates to its current module, however, if a module is run directly, the __name__ is set to the
+string "__main__".
+
+Note-> Its normally used in the very end of the .pu file, with:
+	Every class and function defined above, then 'if __name__=="__main__"' is written, then some code logic inside the IF statement
+	which use the functions and classes used above.
+	
+	Function/Classes
+	.
+	.
+	.
+	
+	if __name__ == "__main__":
+		#LOGIC
