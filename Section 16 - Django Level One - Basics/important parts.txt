@@ -1,0 +1,43 @@
+Django is a free and open source web framework. It allows us to map a requested URL from a user to the code that is actually meant to 
+handle it. It also allows us to create the requested HTML dynamically using templates. Using templates, we can actually inject calculated
+values and information from the database to an HTML page to show to the user.
+
+A virtual environment allows us to have a virtual installation of Python and packages on our computer. We need this because of various 
+reasons. Python packages get updated and changed often. There can be changes which break backwards compatibility, which can affect the web
+application/project. To handle against this, we use a virtual environment.
+
+To create a venv with conda, we use:
+	conda create --name myEnv django			Here myEnv is the name of the environment, the last word (django) is 
+								basically what package we want to initiate this environment with. Conda 
+								requires this
+
+You can then activate this environment by:
+	activate myEnv						Now, anything installed with pip or conda when the environment is activated
+								will be installed for that environment only, not the global python 
+								distribution.
+
+You can deactivate the environment by:
+	deactivate myEnv
+
+IF THESE COMMANDS DON'T WORK IN THE CMD, TRY THEM IN THE ANACONDA PROMPT
+
+We can also create the venv with python first, specifying the version we want. For this course, 3.4,3.5,3.6 is reccomended.
+So we do:
+	conda create --name MyDjangoCourseEnv python=3.6			(My venv name is MyDjangoCourseEnv)
+
+
+TO LIST ALL THE ENVIRONMENTS ON OUR COMPUTER, WE USE:
+	conda info --envs
+
+----------------------------------------------------------------------Django Project---------------------------------------------------------------------
+
+When django is installed, a useful command line tool (django-admin) is also installed to quickly run things straight from the command line.
+
+Make sure these commands are being run in the venv which was made.
+
+Go to the directory you want the project to be made in.
+
+To create the first project, we run:
+	django-admin startproject first_project
+
+So a project is created which has a few files already made. These are __init__.py, asgi.py, settings.py, urls.py, wsgi.py, manage.py
