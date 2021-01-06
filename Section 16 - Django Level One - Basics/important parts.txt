@@ -166,3 +166,55 @@ There are other ways of doing it also.
 	We can have the application itself host its own URL patterns that we can then call from the urls.py in the first_project. 
 
 ------------------------------------------------------------------Templates-------------------------------------------------------------------------
+
+Templates are a very key part of django. We can also connect templates with models so we can display data created dynamically. 
+The template will contain the static part of an HTML page (parts that are always the same).
+
+Then there are template tags, which have their own special syntax.
+This syntax allows you to inject dynamic content that your Django App’s views will produce, effecting the final HTML.
+
+
+To work with templates, 
+1) We first need to create a templates directory and then a subdirectory for each specific app's templates.
+	Eg-> 	first_project/templates/first_app
+
+2) Next, we have to let Django know of templates by editing the DIR key inside the templates dictionary in the settings.py file.
+	However before this, we have to consider that we want the django project to be easily transferable from one computer to another.
+	So, we can't hardcode the path in the DIR key, we'll have to mention a relative path using python's OS module or pathlib module.
+	
+	We add a line of code-> 
+				TEMPLATE_DIR = BASE_DIR / 'TEMPLATES'
+	We also add this TEMPLATES_DIR in the DIRS in the TEMPLATES list.
+
+3) Next, we can create an HTML file called index.html inside the templates/first_app directory. 
+
+4) Inside this index.html file, we'll insert template tags (OR django template variables) along with normal HTML. These template tags allow 
+	us to inject content into the HTML directly from Django, subsequently, injecting content from the database.
+	
+	Code-> 		<<!DOCTYPE html>
+			<html lang="en" dir="ltr">
+			  <head>
+    				<meta charset="utf-8">
+    				<title></title>
+  			  </head>
+  			  <body>
+    				<h1>Hello World, this is index.html!</h1>
+    				{{insert_me}}       <!--This is a template tag, which we will use to insert stuff with django-->
+  		 	  </body>
+			</html>
+
+5) In order to do all this, we use the render() function inside the index() function inside the views.py file. 
+
+	Code-> 
+		from django.shortcuts import render
+		from django.http import HttpResponse
+
+		def index(request):
+		    my_dict={'insert_me':"Hello, I am from views.py!"}      #This is basically a dictionary where the key is the same as the variable we created in the template teg ({{}}) inside the index.html in the template folder.
+		    return render(request,'first_app/index.html',context=my_dict)            #1st parameter is the template we wish to use. 2nd parameter is the actual file, 3rd parameter is the context(This is basically going to link up what we're passing in here, to our index.html file)
+
+
+NOTE-> See the Django - Level One - Part Nine - Templates Solutions video for a full overview/runthrough again.
+
+-------------------------------------------------------------------STATIC FILES------------------------------------------------------------------------
+
