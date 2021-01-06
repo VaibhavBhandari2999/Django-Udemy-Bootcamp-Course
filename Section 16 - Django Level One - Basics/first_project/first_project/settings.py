@@ -15,6 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = BASE_DIR / 'TEMPLATES'
+STATIC_DIR = BASE_DIR / 'static'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -119,3 +120,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIR=[STATIC_DIR]        #The reason for this is, when we're dealing with our own applications/projects, we may not want just static>images folders. We may want to divide the static folder contents into different subfolders depending on the apps inside the first_project. Like how we have with the templates folder. So it may have been static>first_app>images
+                        #STATIC_DIR is just the relative path of the static folder, whose path we have defined above in the settings.py file only.

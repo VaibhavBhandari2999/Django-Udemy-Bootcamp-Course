@@ -183,7 +183,7 @@ To work with templates,
 	So, we can't hardcode the path in the DIR key, we'll have to mention a relative path using python's OS module or pathlib module.
 	
 	We add a line of code-> 
-				TEMPLATE_DIR = BASE_DIR / 'TEMPLATES'
+				TEMPLATE_DIR = BASE_DIR / 'TEMPLATES'			See https://stackoverflow.com/questions/50846049/join-two-absolute-paths 2nd or 3rd solution
 	We also add this TEMPLATES_DIR in the DIRS in the TEMPLATES list.
 
 3) Next, we can create an HTML file called index.html inside the templates/first_app directory. 
@@ -218,3 +218,46 @@ NOTE-> See the Django - Level One - Part Nine - Templates Solutions video for a 
 
 -------------------------------------------------------------------STATIC FILES------------------------------------------------------------------------
 
+Till above, we've just used templates to return simple text. What if we want to insert other types of media, like photos.
+To do this:
+1) We will create a new directory inside of the project called static ( just like we did for templates)
+			first_app/static/images
+2) Then we will add this directory path to the project’s settings.py file
+			BASE_DIR = Path(__file__).resolve().parent.parent
+			TEMPLATE_DIR = BASE_DIR / 'TEMPLATES'
+			STATIC_DIR = BASE_DIR / 'static'
+
+3) We will also add a STATIC_URL variable
+			
+			STATIC_URL = '/static/'			#Already present in the boilderplate code (when the project was being created)
+			STATICFILES_DIR=[STATIC_DIR]        #The reason for this is, when we're dealing with our own applications/projects, we may not want just static>images folders. We may want to divide the static folder contents into different subfolders depending on the apps inside the first_project. Like how we have with the templates folder. So it may have been static>first_app>images
+                        					#STATIC_DIR is just the relative path of the static folder, whose path we have defined above in the settings.py file only.
+
+4) Once we’ve done that we need a place to store our static image files. We create a directory inside of static called images. Place a 
+	.jpg file inside this images directory.
+
+Once, we've done this, we run the server to test that this all worked you can go to:	127.0.0.1:8000/static/images/pict.jpg
+That will confirm that the paths are set up and connected properly. But what we really want to do is set up a template tag for this!
+
+5)To do this inside an html file, we add in a few specific tags, at the top:
+		{% load staticfiles %}				(top meaning, after the Doctype HTML line). In Django's later versions, this doesn't work, so we have to use:
+		{% load static %}				In later versions of Django	https://stackoverflow.com/questions/55929472/django-templatesyntaxerror-staticfiles-is-not-a-registered-tag-library
+6) Then we want to insert the image with an HTML <img src= > style tag using:
+		<img src={%static "images/djangoguitar.jpg" %} />
+
+NOTE-> Notice how this template tag is a little different in that it uses {% %} instead of {{ }}. We will discuss and show these 
+	differences more clearly in future lectures, but for now consider {{ }} as being used for simple text injection, and we can 
+	use {% %} for more complex injections and logic (like writing a for loop using these template tags inside the html file).
+
+
+Static files can be CSS files also. We'll do an example of that:
+
+1) Create a directory static/css
+
+2) Inside that, create a mystyle.css file and code:
+		h1{
+		  color:red;
+		}
+
+3) Inside the HTML file, add a link tag to the style sheet.
+		<link rel="stylesheet" href="{% static "css/mystyle.css" %}"/>

@@ -1,11 +1,17 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" href="{% static "css/mystyle.css" %}"/>
   </head>
   <body>
     <h1>Hello World, this is index.html!</h1>
     {{insert_me}}       <!--This is a template tag, which we will use to insert stuff with django-->
+
+
+		<img src="{%static "images/djangoguitar.jpg" %}" alt="Uh Oh, didnt show properly!"/>
+
   </body>
 </html>
