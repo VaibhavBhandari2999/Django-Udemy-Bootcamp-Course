@@ -40,4 +40,129 @@ Go to the directory you want the project to be made in.
 To create the first project, we run:
 	django-admin startproject first_project
 
-So a project is created which has a few files already made. These are __init__.py, asgi.py, settings.py, urls.py, wsgi.py, manage.py
+So a project is created which has a few files already made. These are __init__.py, asgi.py, settings.py, urls.py, wsgi.py, manage.py.
+
+1) __init__.py -> Is a blank python script that due to its special name lets python know that this directory can be treated as a package.
+2) settings.py -> Where we will be storing all of our project settings.
+3) urls.py     -> Is a python script that will store all the URL patterns for your project. Basically the different pages of the web app
+			and how they connect to the end user. This file uses a lot of regex
+4) wsgi.py     -> Is a python script that acts as the Web Server Gateway Interface. It helps us deploy our web application.
+5) manage.py   -> Is a python script that we will use a lot. It will be associated with many commands as the web app is built
+
+So now we run the server, after going into your project directory, activating the venv, and running:
+	python manage.py runserver
+
+					What will be shown in the cmd/anaconda prompt is:
+									Django version 3.1.5, using settings 'first_project.settings'
+									Starting development server at http://127.0.0.1:8000
+
+When http://127.0.0.1:8000 is opened in the browser, you see the django project is running.
+
+There also be a migrations warning displayed while running the command. 
+Eg->	You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, 
+	contenttypes, sessions.
+	Run 'python manage.py migrate' to apply them.
+
+This is related to databases and how to connect them to django.
+A migration allows us to move databases from one design to another. This is also reversible.
+
+------------------------------------------------------------------Django Application-------------------------------------------------------------------------
+
+A django project is a collection of applications and configurations that when combined together will make up your full web application 
+(your complete website running with Django). 
+A django application is created to perform a particular functionality for your entire web application. For example, one can have a 
+registration app, a polling app, comments app, etc. 
+
+These django apps can be plugged into other people's projects, so you can reuse them (or use other people's apps).
+This shows the concept of pluggable django applications
+
+We create a simple application using the command:
+	python manage.py startapp first_app				(Within our django projec, we're creating a django application)
+
+Now we see a first_app directory inside our first_project directory and some more files inside the first_app directory like:
+
+1) __init__.py  -> Is a blank python script that due to its special name lets python know that this directory can be treated as a package.
+2) admin.py	-> We can register your models here which Django will then use with Django's admin interface (admin features of Django are
+			built-in and very powerful).
+3) apps.py	-> Here, we can place application specific configurations.
+4) models.py	-> Here, we can store the application's data models and thats where we're going to specify the entities and relationships
+			between the data.
+5) test.py	-> Here, we can store a series of functions to test out our application code.
+6) views.py	-> Here, we can store a series of functions to handle requests and return responses.
+
+7) migrations folder	-> This directory stores database specific information as it relates to the models
+
+Note-> views.py and models.py are the 2 files, we're going to be using for any application.
+
+See MODEL-VIEW-TEMPLATE on net.
+
+But first, we need to tell django that we have created the first_app application.
+
+***************************
+1) We do this by going to settings.py and see the installed_apps list. There are already some default apps here. We need to add in our 
+'first_app' as a string into that list.
+We run the server again, to make sure there are no errors and everything worked fine. 
+
+2) Next step is to create a View. For our first view, we're just going to send back some somple text 'Hello World'.
+	We open views.py under first_app and do the following:
+	
+		from django.shortcuts import render
+		from django.http import HttpResponse
+
+		def index(request):					Each view must return an HTTPResponse object. So we can also return
+			return HttpResponse("Hello World")		some HTML if we wanted, like "<em> Italics </em>"
+
+3) In order to see this view while running the server, we need to map this view to the urls.py file. So we add another url call to the
+	list.
+
+		We also add: 		from first_app import views					
+					urlpatterns = [
+					    path('',views.index,name='index'),		In the old django, it used to be url(r'^$',views.index,name='index')
+					    path('admin/', admin.site.urls),
+					]
+
+	And run the server again. So now, we can see 'Hello World' at the URL.
+
+--------------------------------------------------------------------URL MAPPING-----------------------------------------------------------------------
+
+We saw above the way of directly mapping from views.py file to the urls.py. 
+There are other ways of doing it also.
+
+1) include function -> The include() function allows us to look for a match with regular expressions and link back to our application's own
+			urls.py file. We will have to manually add in this urls.py as its not created when the app is created.
+	
+			So we would add the following to the project’s urls.py
+					from django.conf.urls import include
+					urlpatterns = [ ... url(r’^first_app/’,include(‘first_app.urls’)), ...]
+			This allows us to look for any URL that has the pattern 'www.domainname.com/first_app/...'
+			If we match this pattern, the include() function basically tells Django to go look at the urls.py file inside of 
+			first_app folder (not the one inside the project folder). 	
+
+			This might seem like a lot of work for a simple mapping, but later on we will want to try to keep our project’s 
+			urls.py clean and modular.
+			So we set the reference to the app, instead of listing them all in the main urls.
+
+			So to implement this, we do:
+				We also import something else in the urls.py file of the first_project -> 
+						from django.conf.urls import include
+				We add another list item in the urls.py file of the first_project ->
+						urlpatterns = [
+							    path('',views.index,name='index'),		So basically the domain name is calling the view of the first_app
+							    path('admin/', admin.site.urls),
+							    path('first_app/',include('first_app.urls')),
+						]
+				Next, we create the urls.py file inside the first_app application. This is basically a mini urls.py file which
+				is in the first_project.
+						from django.urls import path
+						from . import views
+
+						urlpatterns = [
+							    path('', views.index, name='index'),
+						]
+
+			Now, when we restart the server, we get 'Hello World' even when we have the URL 127.0.0.1:8000/first_app/
+			but it won't work for 127.0.0.1:8000/second_app as we haven't mentioned any string matching URL for that.
+
+	We can have the application itself host its own URL patterns that we can then call from the urls.py in the first_project. 
+
+------------------------------------------------------------------Templates-------------------------------------------------------------------------
