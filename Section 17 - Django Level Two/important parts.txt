@@ -1,0 +1,343 @@
+In Django Level one, we learnt:
+	Setting up Projects and Applications
+	Creating Views and Mapping URLs
+	Using simple Templates and tags
+	Serving static media files
+	
+In Level Two, we'll see models and databases. We'll also see the admin interface.
+
+So, before that, we'll just do a workthrough of whatever we learned in Django Level One:
+-> Activate an existing 
+-> django-admin startproject first_project				To create the project
+-> cd first_project
+-> python manage.py startapp first_app					To create the application
+-> We create a view in the views.py file in first_app folder
+
+	from django.shortcuts import render
+	from django.http import HttpResponse
+
+	def index(request):
+	    my_dict={'insert_me':"Hello, I am from views.py!"}      #This is basically a dictionary where the key is the same as the variable we created in index.html in the template folder
+	    return render(request,'firstindex.html',context=my_dict)                      #1st parameter is the template we wish to use. 2nd parameter is the actual file, 3rd parameter is the context(This is basically going to link up what we're passing in here, to our index.html file)
+
+-> Do URL Mappings. So we do double URL mappings.
+	Do a URL mapping in first_project to go to URLs.py file in first_app
+
+	So create urls.py in first_app
+		from django.urls import path
+		from first_app import views
+
+		urlpatterns=[
+		    path('', views.index, name='index'),        #The function call in views.py
+		]
+	
+	Now, we have done urls.py working inside an application, but we also need to edit first_project's urls.py to make sure first_app's urls.py are called correctly
+		from django.contrib import admin
+		from django.urls import path
+		from first_app import views
+		from django.conf.urls import include
+
+		urlpatterns = [
+		    path('',views.index,name='index'),          #View for actual index page
+		    path('admin/', admin.site.urls),
+		    path('first_app/',include('first_app.urls')),   #View for all pages with first_app/ in their URLs
+		]
+	If we get confused, the examples are given in the first_project's urls.py file at the point of creation also
+
+-> Create templates folder(inside first_project) for each application inside the project. Each template folder will have html files for that application.
+	Create a folder (first_app) inside the templates folder, and create an index.html file inside the first_app folder
+
+		<<!DOCTYPE html>
+		<html lang="en" dir="ltr">
+		  <head>
+		    <meta charset="utf-8">
+		    <title></title>
+		  </head>
+		  <body>
+		    <h1> Hello this is a test page!</h1>
+		     <h2>{{insert_content}}</h2>    <!--Whatever the key was in views.py will be given here-->
+		  </body>
+		</html>
+
+-> After the template files, we have to edit the settings file so we have all the directories and add the same in the DIR list also.
+	TEMPLATE_DIR = BASE_DIR / 'TEMPLATES
+
+-> python manage.py runserver			To test if everything's working 
+
+**If it isnt't working see the first_app_original project in the Section 16 - Django Level One directory 
+
+-------------------------------------------------------------------MODELS OVERVIEW------------------------------------------------------------------------
+
+An essential part of any website is the ability to accept information from a user and input it into a database and retrieve information 
+from a database and use it to generate content for the user.
+
+We use  Models to incorporate a database into a Django Project. Models in Django are the equivalent of tables and have relationships like tables in SQL
+Django comes equipped with SQLite (which is a SQL engine)
+SQLite will work for our simple examples, but Django can connect to a variety of SQL engine backends (PostGreSQL, mySQL and all we have to
+do is switch out the actual engine)!
+
+In the settings.py file you can edit the ENGINE parameter used for DATABASES(we change the ENGINE parameter for different backends like MySQL, PostGreSQL)
+To create an actual model, we use a class structure inside of the relevant applications models.py file
+
+This class object will be a subclass of Django’s built-in class:
+django.db.models.Model
+So basically we're going to inherit from this built-in model class.
+Then each attribute of the class represents a field, which is just like a column name with constraints in SQL
+
+Eg of a model class that would go in models.py of our application->
+										These classes inherit from Django's inbuilt model class
+	class Topic(models.Model):
+		top_name = models.CharField(max_length=264, unique=True)	CharField is the type of field and constraints are the arguements
+
+	class Webpage(models.Model):						Another model for a webpage. Essentially each class is going to act like a table in a Database
+		category = models.ForeignKey(Topic)				This field is going to be a foreign key from the Topic model
+		name = models.CharField(max_length=264)				Another field (column in a table)
+		url = models.URLField()						Another field (column in a table)
+	
+	def __str__(self):							Specific method to return the actual name. So if we say prints Webpage, it grabs the name
+		return self.name
+	
+ 
+After we’ve set up the models we can migrate the database
+This basically let’s Django do the heavy lifting of creating SQL databases that correspond to the models we created
+
+So basically, we can just write the above command and Django does the tough stuff of creating a SQL database that corresponds to that model
+
+Django can do this entire process with a simple command:
+	python manage.py migrate 
+Then register the changes to your app, shown here with some generic “app1”:
+	python manage.py makemigrations app1 
+
+Then migrate the database one more time:
+	python manage.py migrate 
+We can then later on use the shell from the manage.py file to play around with the models
+
+
+In order to use the more convenient Admin interface with the models however, we need to register them to our application’s admin.py file.
+We can do this with this code:
+	from django.contrib import admin
+	from app.models import Model1,Model2		App is the name of your project. Model1 and Model2 are Webpage and Topic in the above example
+	admin.site.register(Model1)			
+  	admin.site.register(Model2)
+
+Then with the models and database created, we can use Django’s fantastic Admin interface to interact with the database.
+This Admin interface is one of the key features of Django!
+
+In order to fully use the database and the Admin, we will need to create a “superuser”
+We can do this with the following:
+	python manage.py createsuperuser
+Providing a name, email, and password
+
+Once we’ve set up the models, it’s always good idea to populate them with some test data
+We will use a library to help with this called Faker and create a script to do this.
+
+----------------------------------------------------------
+
+We use the 2 projects from Django Level One - first_project(which is named as first_project_2 in Section 17 - Django Level Two folder) 
+and ProTwo.
+
+Inside first_app, open the models.py file
+-> If 'from django.db import models' is not already there, type that.
+-> We use OOP to create models with Django
+
+		class Topic(models.Model):						We inherit from models.Model which is the base class, Topic is the derived class
+		    top_name = models.CharField(max_length=264,unique=True)		max_length is a constraint of this character field top_name
+											Some max_length is recommended as otherwise, users can enter countless charecters which we'll have to save
+		    def __str__(self):								
+		        return self.top_name
+
+		class Webpage(models.Model):						Has 3 columns - topic,name and url
+		    topic = models.ForeignKey(Topic,on_delete=models.CASCADE)		
+		    name = models.CharField(max_length=264,unique=True)
+		    url = models.URLField(unique=True)					Only allows URLs in the URL field
+
+		    def __str__(self):
+        		return self.name
+
+		class AccessRecord(models.Model):
+		    name = models.ForeignKey(Webpage,on_delete=models.CASCADE)
+		    date = models.DateField()						To store when the webpage was actually accessed
+
+		    def __str__(self):
+		        return str(self.date)						We return it as a string as its a DateTime object
+
+
+-> So we know that the real power of Django is that it build out the SQL database based on the classes we've defined here.
+-> To actually do that, we have to run a few commands
+	python manage.py migrate				#'Running Migrations' should be shown. If this is already run before, it should say 'no migrations to apply'
+
+-> Next thing to do is register these changes to the application
+	python manage.py makemigrations first_app		#It'll say 'creating model'. If its already run before, it'll say 'No changes detected in app 'first_app''
+
+-> Run the migrate code again
+	python manage.my migrate
+ 
+Now the models should be ready and connected to a SQL database which django just created for us and registered the changes to the application
+
+So now, how to confirm whether everything up till now has run properly and how do we actually interact with the database.
+
+The most basic way is to create some test data with some shell commands:
+	1) python manage.py shell
+	2) from first_app.models import Topic				If this gives an error, migration commands are probably not done
+	3) print(Topic.objects.all)					This will print all the objects in the topic model or topic table. The first time however, we'll get <QuerySet[]>
+	4) t=Topic(top_name="Social Network")				To put values in the table basically
+	5) t.save()							To save the change
+	6) print(Topic.objects.all())					Now, <QuerySet[<Topic:Social Network>]>
+	7) quit()
+
+We can't use the shell everytime, so for convinience we use the Admin interface which is provided by django. But in order to interface the admin
+with the models, we need to register them to our app's admin.py file.
+		There is an admin.py file in the first_app folder
+			from django.contrib import admin
+			from .models import Topic,Webpage,AccessRecord
+			# Register your models here.
+			admin.site.register(Topic)
+			admin.site.register(Webpage)
+			admin.site.register(AccessRecord)
+
+So to give admin privileges to a particular user and not everybody, we use a SuperUser
+	python manage.py createsuperuser
+					Then 3 prompts are shown for Username, email address and password
+
+Now in order to actually use the superuser in the admin interface,
+we run the server.
+	Open 127.0.0.1:8000/admin				A login will be shown, enter the username and password
+
+So now in the admin interface, we can do all CRUD commands for the data. We can also add users and groups
+
+----------------------------------------------------------------POPULATION SCRIPTS---------------------------------------------------------------------------
+
+It is usually a good idea to create a script that will populate our models with some “dummy” data.
+Let’s see how to use the Faker library to create this script!
+
+Install the Faker library-> pip install Faker
+Faker's documentation is at https://faker.readthedocs.io/en/master/
+
+In first_project_2 (top level directory), create a new file called populate_first_app.py
+
+1) First, we need to configure the settings for the project, we need to do it before actually manipulating the models.
+
+Full Code-> 
+	import os								# Configure settings for project
+										# Need to run this before calling models from application!
+	os.environ.setdefault('DJANGO_SETTINGS_MODULE','first_project.settings')
+
+	import django
+	django.setup()								# Import settings
+
+	#Fake Population script
+	import random
+	from first_app.models import Topic,Webpage,AccessRecord
+	from faker import Faker
+
+	fakegen = Faker()							#Create instance of that faker object
+	topics = ['Search','Social','Marketplace','News','Games']		#List of topics to be created
+
+	def add_topic():							#Function that adds topic
+	    t = Topic.objects.get_or_create(top_name=random.choice(topics))[0]	#get_or_create() basically retrieves the topic if it already exists in the model or creates it.	So we take a random topic from the list and we have a [0] because of the way it's formatted back(get_or_create returns a tuple that returns an object and something that's created. The first element in the tuple object is a reference to the model instance that this get_or_create method creates). So basically it returns a tuple, we want to grab the first object of the tuple which is that reference to the model instance. Thats why we add an additional index of 0 here
+	    t.save()								
+	    return t
+
+	def populate(N=5):							#Populate it 5 times by default but depends on the arguement passed in the main function, we can also keep this as a command line parameter
+	    '''
+	    Create N Entries of Dates Accessed
+	    '''
+
+	    for entry in range(N):
+       	 	top = add_topic()						# Get Topic for Entry, calls the add_topic() function
+	        fake_url = fakegen.url()					# Create Fake Data for entry with a Faker function
+	        fake_date = fakegen.date()					# Create Fake Data for entry with a Faker function
+	        fake_name = fakegen.company()					# Create Fake Data for entry with a Faker function
+
+	        webpg = Webpage.objects.get_or_create(topic=top,url=fake_url,name=fake_name)[0]		# Create new Webpage Entry. Here for topic=top, we're actually returning a topic object from add_topic() as the 'topic' in webpage is a foreign key
+
+	        accRec = AccessRecord.objects.get_or_create(name=webpg,date=fake_date)[0]		# Create Fake Access Record for that page. Here we pass the full webpg object as its a foreign key. SO we can't just pass name=webpg as a string if its a foreign key
+        												# Could add more of these if you wanted...
+
+	if __name__ == '__main__':
+	    print("Populating the databases...Please Wait")
+	    populate(20)							#Default was 5, we can put any number
+	    print('Populating Complete')
+
+
+After running the populate_first_app.py script, run the server again. python manage.py runserver.
+
+Now, we see that fake records are added to the database. We can see by logging in to the admin
+
+---------------------------------------------------------------MODELS-TEMPLATES-VIEWS----------------------------------------------------------------------------
+
+Django operates on what is known as Models-Templates-Views
+This is also called “MTV” and encompasses the idea of how to connect everything we’ve talked about so far: models, templates, and views.
+
+There are a few basics steps to achieving the goal of serving dynamic content to a user based off the connection of the models, views , and templates.
+They Are:
+	1) In the views.py file we import any models that we will need to use.
+	2) Use the view to query the model for data that we will need
+	3) Pass results from the model to the template
+	4) Edit the template so that it is ready to accept and display the data from the model.
+	5) Map a URL to the view.
+
+We can practice this methodology by changing what we display on the front index page.
+To begin our understanding of this process we will start by generating a table.
+The table will display all the webpages and access records from the AccessRecord database we created and populated.
+
+We will also use template tagging to connect the model to the html page.
+
+In first_app's views.py file, we connect this to the database, we add:
+
+	from first_app.models import Topic,Webpage, AccessRecord		We import the models
+
+	def index(request):
+	    webpages_list = AccessRecord.objects.order_by('date')		We order the objects by the Date field(date). (Basically we grab stuff from the model itself)
+	    date_dict = {"access_records":webpages_list}			Dates Dictionary where a key access records has the value as the webpages list
+	    return render(request,'first_app/index.html',date_dict)
+
+So far, we've done steps 1 and 2.
+
+No, we go over to the HTML page at templates>first_app>index.html
+	
+	<!DOCTYPE html>
+	{% load static %}							Normal template tags to load static files in case we have them (here we don't)
+	<html>
+	  <head>
+	    <meta charset="utf-8">
+	    <title>Django Level Two</title>
+	    <link rel="stylesheet" href="{% static "first_app/css/mystyle.css" %}"/>	href here is an injection with template tagging(here, css only changes the color to red)
+	  </head>
+	  <body>
+	    <h1>Hi, welcome to Django Level Two!</h1>
+	    <h2>Here are your access records:</h2>
+	    <div class="djangtwo">			 
+	      {% if access_records %}						Here, we just check if we actually have the access records from the key in views.py
+	          <table>
+	            <thead>
+	              <th>Site Name</th>
+	              <th>Date Accessed</th>
+	            </thead>
+										Login that loops through every row in the access records
+	            {% for acc in access_records %}				a simple for loop in python,(similar to) for i in list:
+	              <tr>
+	                <td>{{ acc.name }}</td>
+	                <td>{{ acc.date }}</td>
+	              </tr>
+	            {% endfor %}						Whenever, we have a for loop tag, we have to end it also
+	        </table>
+	
+	      {% else %}							As we have an 'if' access records, we need an 'else' also
+	        <p>No Access Records. Table Not Created.</p>
+	      {% endif %}							Whenever, we have an if and else, we need to end it also
+	    </div>
+	  </body>
+	</html>
+
+
+After this, we check if the urls.py files in first_project and first_app are okay
+
+To see if this works, we run the server:
+	python manage.py runserver
+
+
+Note-> Django is actually very good at debugging. Suppose, we haven't written {% endif %} when we should have. When, we run the server, we'll get an
+	error page in the server only. That error will tell us "unclosed tag on line 14. Looking for one of: endif".
+
+	So it will tell you what is needed. It will also mention where the if tag is which needs to be closed with an endif
